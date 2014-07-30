@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "CSRevealingViewController"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "An omni-directional swipe-to-reveal ViewController."
 
   s.description  = <<-DESC
@@ -67,7 +67,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/josefdlange/CSRevealingViewController.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/josefdlange/CSRevealingViewController.git", :tag => "0.0.2" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
