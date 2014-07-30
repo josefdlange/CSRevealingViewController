@@ -14,14 +14,21 @@
 @end
 
 @implementation AppDelegate
-            
+
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     CSRevealingViewController *rVC = (CSRevealingViewController *)self.window.rootViewController;
+    UIStoryboard *storyboard = rVC.storyboard;
+
     rVC.overhang = 50.0;
     rVC.direction = CSRevealingSwipeDirectionUp;
     rVC.shouldRespondToEdgeTap = YES;
+
+    UIViewController *backVC = [storyboard instantiateViewControllerWithIdentifier:@"CSBackRootVC"];
+    UIViewController *frontVC = [storyboard instantiateViewControllerWithIdentifier:@"CSFrontRootVC"];
+    rVC.backViewController = backVC;
+    rVC.frontViewController = frontVC;
 
     return YES;
 }

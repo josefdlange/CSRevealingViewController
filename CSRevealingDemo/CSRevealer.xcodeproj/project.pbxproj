@@ -50,8 +50,8 @@
 		562DA5021978DE160023A25B /* CSRevealerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CSRevealerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		562DA5071978DE160023A25B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		562DA5081978DE160023A25B /* CSRevealerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CSRevealerTests.m; sourceTree = "<group>"; };
-		562DA5161978DE6C0023A25B /* CSRevealingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSRevealingViewController.h; sourceTree = "<group>"; };
-		562DA5171978DE6C0023A25B /* CSRevealingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSRevealingViewController.m; sourceTree = "<group>"; };
+		562DA5161978DE6C0023A25B /* CSRevealingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CSRevealingViewController.h; path = ../../CSRevealingViewController/CSRevealingViewController.h; sourceTree = "<group>"; };
+		562DA5171978DE6C0023A25B /* CSRevealingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CSRevealingViewController.m; path = ../../CSRevealingViewController/CSRevealingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
