@@ -72,6 +72,8 @@
         self.revealedConstant = 0.0;
     }
     [self updateConstraints];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:CSRevealingViewControllerDidChangeState object:nil];
 }
 
 - (CSRevealingSwipeDirection)direction {
@@ -341,12 +343,25 @@
 }
 
 #pragma mark - External Messaging
-- (void)reveal {
-    self.isRevealed = YES;
+
+- (void)revealAnimated:(BOOL)animated {
+    if(animated) {
+        [UIView animateWithDuration:0.3f animations:^(void) {
+            self.isRevealed = YES;
+        }];
+    } else {
+        self.isRevealed = YES;
+    }
 }
 
-- (void)obscure {
-    self.isRevealed = NO;
+- (void)unrevealAnimated:(BOOL)animated {
+    if(animated) {
+        [UIView animateWithDuration:0.3f animations:^(void) {
+            self.isRevealed = NO;
+        }];
+    } else {
+        self.isRevealed = NO;
+    }
 }
 
 #pragma mark - Utility Methods

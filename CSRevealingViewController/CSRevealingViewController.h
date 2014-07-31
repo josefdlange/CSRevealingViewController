@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Command Shift Labs. All rights reserved.
 //
 
+#define CSRevealingViewControllerDidChangeState @"CSRevealingViewControllerDidChangeState"
+
 #import <UIKit/UIKit.h>
 
 typedef enum : NSUInteger {
@@ -37,9 +39,9 @@ typedef enum : NSUInteger {
 
 #pragma mark - Controlling the RevealingViewController
 /** Reveal the bottom ViewController. */
-- (void)reveal;
+- (void)revealAnimated:(BOOL)animated;
 
 /** Return the top ViewController to above of the back ViewController, obscuring it. */
-- (void)obscure;
+- (void)unrevealAnimated:(BOOL)animated;
 
 @end
