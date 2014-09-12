@@ -28,6 +28,8 @@ typedef enum : NSUInteger {
 @property (nonatomic, assign) CSRevealingSwipeDirection direction;
 /** Whether or not tapping the front VC will re-cover the back VC. */
 @property (nonatomic, assign) BOOL shouldRespondToEdgeTap;
+/** Whether or not we should listen to pan gestures at all. */
+@property (nonatomic, assign) BOOL shouldRespondToPanGesture;
 
 #pragma mark State Properties
 /** Front and back ViewControllers should not be frequently changed. If you need to change the content of one or the other frequently, I suggest a NavigationController. */

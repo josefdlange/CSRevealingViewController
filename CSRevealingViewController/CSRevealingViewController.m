@@ -54,6 +54,7 @@
     [super viewDidLoad];
     self.isRevealed = NO;
     self.shouldRespondToEdgeTap = NO;
+    self.shouldRespondToPanGesture = YES;
     [self resetGestures];
 
 }
@@ -129,6 +130,11 @@
     _frontViewController = frontViewController;
     _frontViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self resetConstraints];
+}
+
+- (void)setShouldRespondToPanGesture:(BOOL)shouldRespond {
+    _shouldRespondToPanGesture = shouldRespond;
+    [self resetGestures];
 }
 
 #pragma mark - ViewController Management
@@ -247,6 +253,7 @@
 
 #pragma mark - Gesture Recognition
 - (void)resetGestures {
+    [self removeGestures];
     [self addPanGesture];
     [self addTapGesture];
 }
@@ -333,13 +340,22 @@
 }
 
 - (void)addPanGesture {
-    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    [self.frontViewController.view addGestureRecognizer:pan];
+    if(self.shouldRespondToPanGesture) {
+        UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+        [self.frontViewController.view addGestureRecognizer:pan];
+    }
 }
 
 - (void)addTapGesture {
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self.frontViewController.view addGestureRecognizer:tap];
+}
+
+- (void)removeGestures {
+    UIGestureRecognizer *recognizer;
+    for(recognizer in self.frontViewController.view.gestureRecognizers) {
+        [self.frontViewController.view removeGestureRecognizer:recognizer];
+    }
 }
 
 #pragma mark - External Messaging
