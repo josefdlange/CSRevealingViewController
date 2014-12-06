@@ -17,6 +17,16 @@ typedef enum : NSUInteger {
     CSRevealingSwipeDirectionRight
 } CSRevealingSwipeDirection;
 
+@protocol CSRevealingViewControllerChild
+
+@optional
+-(void)willReveal;
+-(void)willUnreveal;
+-(BOOL)shouldReveal;
+-(BOOL)shouldUnreveal;
+
+@end
+
 @interface CSRevealingViewController : UIViewController
 
 #pragma mark Interaction Properties
@@ -35,9 +45,9 @@ typedef enum : NSUInteger {
 /** Front and back ViewControllers should not be frequently changed. If you need to change the content of one or the other frequently, I suggest a NavigationController. */
 
 /** The back ViewController. */
-@property (nonatomic, strong) UIViewController *backViewController;
+@property (nonatomic, strong) UIViewController<CSRevealingViewControllerChild> *backViewController;
 /** The front ViewController */
-@property (nonatomic, strong) UIViewController *frontViewController;
+@property (nonatomic, strong) UIViewController<CSRevealingViewControllerChild> *frontViewController;
 
 #pragma mark - Controlling the RevealingViewController
 /** Reveal the bottom ViewController. */

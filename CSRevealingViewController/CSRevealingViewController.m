@@ -66,15 +66,25 @@
 #pragma mark - Custom Setters and Getters
 
 - (void)setIsRevealed:(BOOL)isRevealed {
-    _isRevealed = isRevealed;
-    if(_isRevealed) {
-        self.revealedConstant = [self valueForRevealed];
-    } else {
-        self.revealedConstant = 0.0;
-    }
-    [self updateConstraints];
+    
+    BOOL shouldReveal = [self askChildrenShouldChangeStateToRevealed:isRevealed];
+    
+    if(shouldReveal) {
+        
+        if(isRevealed != _isRevealed) {
+            [self notifyChildrenOfChangeWithRevealed:isRevealed];
+        }
+        
+        if(isRevealed) {
+            self.revealedConstant = [self valueForRevealed];
+        } else {
+            self.revealedConstant = 0.0;
+        }
+        
+        _isRevealed = isRevealed;
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:CSRevealingViewControllerDidChangeState object:nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CSRevealingViewControllerDidChangeState object:nil];
+    }
 }
 
 - (CSRevealingSwipeDirection)direction {
@@ -101,32 +111,12 @@
     [self updateConstraints];
 }
 
-- (UIViewController *)backViewController {
-    if(!_backViewController) {
-        _backViewController = [[UIViewController alloc] init];
-        _backViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-        _backViewController.view.backgroundColor = [UIColor lightGrayColor];
-    }
-    return _backViewController;
-}
-
-- (void)setBackViewController:(UIViewController *)backViewController {
+- (void)setBackViewController:(UIViewController<CSRevealingViewControllerChild> *)backViewController {
     _backViewController = backViewController;
     _backViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self resetConstraints];
 }
-
-- (UIViewController *)frontViewController {
-    if(!_frontViewController) {
-        _frontViewController = [[UIViewController alloc] init];
-        _frontViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
-        _frontViewController.view.backgroundColor = [UIColor darkGrayColor];
-
-    }
-    return _frontViewController;
-}
-
-- (void)setFrontViewController:(UIViewController *)frontViewController {
+- (void)setFrontViewController:(UIViewController<CSRevealingViewControllerChild> *)frontViewController {
     _frontViewController = frontViewController;
     _frontViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
     [self resetConstraints];
@@ -407,6 +397,40 @@
     CGFloat extreme = [self valueForRevealed];
     BOOL valid = ( (base <= newConstant && newConstant <= extreme)  || (extreme <= newConstant && newConstant <= base) );
     return valid;
+}
+
+- (void)notifyChildrenOfChangeWithRevealed:(BOOL)revealed {
+    NSArray *viewControllers = @[self.frontViewController, self.backViewController];
+    for(UIViewController<CSRevealingViewControllerChild> *vc in viewControllers) {
+        if(revealed) {
+            if([vc respondsToSelector:@selector(willReveal)]) {
+                [vc willReveal];
+            }
+        } else {
+            if([vc respondsToSelector:@selector(willUnreveal)]) {
+                [vc willUnreveal];
+            }
+        }
+    }
+}
+
+- (BOOL)askChildrenShouldChangeStateToRevealed:(BOOL)revealed {
+    BOOL shouldChange = YES;
+    NSArray *viewControllers = @[self.frontViewController, self.backViewController];
+    for(UIViewController<CSRevealingViewControllerChild> *vc in viewControllers) {
+        if(revealed) {
+            if([vc respondsToSelector:@selector(shouldReveal)]) {
+                BOOL shouldReveal = [vc shouldReveal];
+                shouldChange = shouldChange && shouldReveal;
+            }
+        } else {
+            if([vc respondsToSelector:@selector(shouldUnreveal)]) {
+                BOOL shouldUnreveal = [vc shouldUnreveal];
+                shouldChange = shouldChange && shouldUnreveal;
+            }
+        }
+    }
+    return shouldChange;
 }
 
 @end
