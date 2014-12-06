@@ -37,8 +37,14 @@ Then, in your AppDelegate:
     rVC.shouldRespondToEdgeTap = YES;   // Do you want to respond to tapping the "overhang" edge of the top VC to make it reveal?
 
     // Retrieve and set the top and bottom ViewControllers.
-    UIViewController *back = [mainStoryboard instantiateViewControllerWithIdentifier:@"BackRootVC"];
-    UIViewController *front = [mainStoryboard instantiateViewControllerWithIdentifier:@"FrontRootVC"];
+    // Note the typecast to UIViewController <CSRevealingViewControllerChild>
+    // All the methods in this protocol are optional, though I cannot make
+    // the protocol itself optional. Nonetheless, all the protocol methods
+    // are optional, so you don't need to change your VCs unless you want to
+    // take advantage of the protocol... which has shouldX and willX messages
+    // that can be received by children.
+    UIViewController<CSRevealingViewControllerChild> *back = (UIViewController<CSRevealingViewControllerChild> *)[mainStoryboard instantiateViewControllerWithIdentifier:@"BackRootVC"];
+    UIViewController<CSRevealingViewControllerChild> *front = (UIViewController<CSRevealingViewControllerChild> *)[mainStoryboard instantiateViewControllerWithIdentifier:@"FrontRootVC"];
     rVC.backViewController = back;
     rVC.frontViewController = front;
 
