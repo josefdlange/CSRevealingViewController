@@ -111,6 +111,20 @@
     [self updateConstraints];
 }
 
+- (UIViewController<CSRevealingViewControllerChild> *)frontViewController {
+    if(!_frontViewController) {
+        _frontViewController = (UIViewController<CSRevealingViewControllerChild> *)[[UIViewController alloc] init];
+    }
+    return _frontViewController;
+}
+
+- (UIViewController<CSRevealingViewControllerChild> *)backViewController {
+    if(!_backViewController) {
+        _backViewController = (UIViewController<CSRevealingViewControllerChild> *)[[UIViewController alloc] init];
+    }
+    return _backViewController;
+}
+
 - (void)setBackViewController:(UIViewController<CSRevealingViewControllerChild> *)backViewController {
     _backViewController = backViewController;
     _backViewController.view.translatesAutoresizingMaskIntoConstraints = NO;
